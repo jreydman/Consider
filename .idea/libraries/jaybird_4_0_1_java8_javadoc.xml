@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="jaybird-4.0.1.java8-javadoc">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../test/jaybird-4.0.1.java8.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../test/jaybird-4.0.1.java8-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../test/jaybird-4.0.1.java8-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
