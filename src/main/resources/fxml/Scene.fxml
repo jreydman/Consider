@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vvu.report.FXMLController">
+   <tabs>
+      <Tab closable="false" text="Реализация товара">
+         <content>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <top>
+                  <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label text="С">
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </Label>
+                        <DatePicker fx:id="reportStart" prefHeight="31.0" prefWidth="144.0" />
+                        <ComboBox fx:id="startHour" prefHeight="31.0" prefWidth="70.0">
+                           <FlowPane.margin>
+                              <Insets left="10.0" />
+                           </FlowPane.margin></ComboBox>
+                        <ComboBox fx:id="startMinute" prefHeight="31.0" prefWidth="70.0" />
+                        <Label text="по">
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </Label>
+                        <DatePicker fx:id="reportStop" prefHeight="31.0" prefWidth="154.0">
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </DatePicker>
+                        <ComboBox fx:id="stopHour" prefHeight="31.0" prefWidth="70.0">
+                           <FlowPane.margin>
+                              <Insets left="10.0" />
+                           </FlowPane.margin></ComboBox>
+                        <ComboBox fx:id="stopMinute" prefHeight="31.0" prefWidth="70.0" />
+                        <CheckBox fx:id="reportGroup" mnemonicParsing="false" text="Сгруппировать по коду наименования ">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </CheckBox>
+                        <ComboBox fx:id="chYesPrint" prefWidth="150.0">
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <FlowPane.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </FlowPane.margin>
+                        </ComboBox>
+                        <Button fx:id="btGetReport" mnemonicParsing="false" onAction="#onReportAction" text="Получить">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </Button>
+                        <Button fx:id="btExportReport" mnemonicParsing="false" onAction="#onExport" text="Export">
+                           <FlowPane.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </FlowPane.margin>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </Button>
+                     </children>
+                     <opaqueInsets>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </FlowPane>
+               </top>
+               <bottom>
+                  <FlowPane prefHeight="30.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <ProgressBar fx:id="progressBar" prefWidth="200.0" progress="0.0">
+                           <opaqueInsets>
+                              <Insets left="10.0" />
+                           </opaqueInsets>
+                           <FlowPane.margin>
+                              <Insets left="10.0" />
+                           </FlowPane.margin>
+                        </ProgressBar>
+                        <Label text="Фильтр по складу">
+                           <FlowPane.margin>
+                              <Insets left="10.0" right="20.0" />
+                           </FlowPane.margin>
+                        </Label>
+                        <ComboBox fx:id="chSklad" prefHeight="31.0" prefWidth="433.0">
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                           <FlowPane.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </FlowPane.margin>
+                        </ComboBox>
+                        <Button fx:id="btApplySklad" mnemonicParsing="false" onAction="#applySklad" text="Применить">
+                           <FlowPane.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </FlowPane.margin>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </Button>
+                        <Label fx:id="reportStatus">
+                           <FlowPane.margin>
+                              <Insets />
+                           </FlowPane.margin>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </FlowPane>
+               </bottom>
+               <center>
+                  <TableView fx:id="tReport" cacheHint="SPEED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" BorderPane.alignment="CENTER">
+                    <columns>
+                        <TableColumn fx:id="nameKod" editable="false" minWidth="200.0" prefWidth="150.0" text="Внутренний код" />
+                        <TableColumn fx:id="lastDate" editable="false" minWidth="200.0" prefWidth="200.0" text="Дата прихода в базу" />
+                        <TableColumn fx:id="kolvoPrihod" editable="false" minWidth="200.0" prefWidth="200.0" text="Кол-во последнего прихода" />
+                        <TableColumn fx:id="name" editable="false" minWidth="200.0" prefWidth="300.0" text="Наименование товара" />
+                        <TableColumn fx:id="klassName" editable="false" minWidth="200.0" prefWidth="200.0" text="Производитель" />
+                        <TableColumn fx:id="kolvo" editable="false" prefWidth="75.0" text="Реализация  Кол-во " />
+                      <TableColumn fx:id="cenaRasx" editable="false" minWidth="200.0" prefWidth="200.0" text="Цена продажи" />
+                      <TableColumn fx:id="sumBezNds" editable="false" minWidth="150.0" prefWidth="200.0" text="Сумма по приходу без НДС (Закупка)" />
+                        <TableColumn fx:id="sumNds" editable="false" minWidth="150.0" prefWidth="200.0" text="Сумма по приходу с НДС (Закупка)" />
+                        <TableColumn fx:id="sumReal" editable="false" minWidth="150.0" prefWidth="200.0" text="Сумма реализации всего розница" />
+                        <TableColumn fx:id="valDohod" editable="false" minWidth="150.0" prefWidth="200.0" text="Валовый доход  (наценка розница-закупка с НДС)" />
+                        <TableColumn fx:id="cenaRozn" editable="false" minWidth="150.0" prefWidth="200.0" text="Цена розница" />
+                        <TableColumn fx:id="postavkaName" editable="false" minWidth="200.0" prefWidth="200.0" text="Поставщик" />
+                        <TableColumn fx:id="shtrihKod" editable="false" minWidth="200.0" prefWidth="200.0" text="Штрих-код (заводской)" />
+                        <TableColumn fx:id="dataDoc" editable="false" minWidth="200.0" prefWidth="200.0" text="Дата чека" />
+                        <TableColumn fx:id="dateSrok" editable="false" minWidth="200.0" prefWidth="200.0" text="Время чека" />
+                        <TableColumn fx:id="yesPrint" editable="false" minWidth="200.0" prefWidth="200.0" text="Тип чека" />
+                        <TableColumn fx:id="vedKod" editable="false" minWidth="200.0" prefWidth="200.0" text="Уктзед" />
+                        <TableColumn fx:id="nds" editable="false" minWidth="200.0" prefWidth="200.0" text="НДС" />
+                        <TableColumn fx:id="stavkaNds" editable="false" minWidth="200.0" prefWidth="200.0" text="Ставка НДС" />
+                        <TableColumn fx:id="kassir" editable="false" minWidth="200.0" prefWidth="200.0" text="Кассир" />
+                        <TableColumn fx:id="dopinfo" editable="false" minWidth="200.0" prefWidth="200.0" text="Допинфо" />
+                        <TableColumn fx:id="skidka" editable="false" minWidth="200.0" prefWidth="200.0" text="Скидка" />
+                        <TableColumn fx:id="skidkaPro" editable="false" minWidth="200.0" prefWidth="200.0" text="Скидка в процентах" />
+                    </columns>
+                  </TableView>
+               </center>
+            </BorderPane>
+         </content>
+      </Tab>
+      <Tab closable="false" text="Cводная реализация товара">
+         <content>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <bottom>
+                  <FlowPane prefHeight="30.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <ProgressBar fx:id="progressBarPivot" prefWidth="200.0" progress="0.0">
+                           <opaqueInsets>
+                              <Insets left="10.0" />
+                           </opaqueInsets>
+                           <FlowPane.margin>
+                              <Insets left="10.0" />
+                           </FlowPane.margin>
+                        </ProgressBar>
+                        <Label fx:id="pivotStatus">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                           <FlowPane.margin>
+                              <Insets />
+                           </FlowPane.margin>
+                        </Label>
+                     </children>
+                  </FlowPane>
+               </bottom>
+               <center>
+                  <TableView fx:id="tPivot" cacheHint="SPEED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" BorderPane.alignment="CENTER" />
+               </center>
+               <top>
+                  <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label text="С">
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </Label>
+                        <DatePicker fx:id="pivotStart" />
+                        <ComboBox fx:id="startHourPivot" prefHeight="31.0" prefWidth="70.0" />
+                        <ComboBox fx:id="startMinutePivot" prefHeight="31.0" prefWidth="70.0" />
+                        <Label text="по">
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </Label>
+                        <DatePicker fx:id="pivotStop">
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </DatePicker>
+                        <ComboBox fx:id="stopHourPivot" prefHeight="31.0" prefWidth="70.0">
+                           <FlowPane.margin>
+                              <Insets />
+                           </FlowPane.margin>
+                        </ComboBox>
+                        <ComboBox fx:id="stopMinutePivot" prefHeight="31.0" prefWidth="70.0">
+                           <FlowPane.margin>
+                              <Insets right="10.0" />
+                           </FlowPane.margin></ComboBox>
+                        <ComboBox fx:id="chYesPrintPivot" prefWidth="150.0">
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </ComboBox>
+                        <Button fx:id="btGetPivot" mnemonicParsing="false" onAction="#onPivotAction" text="Получить">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                           <FlowPane.margin>
+                              <Insets left="10.0" />
+                           </FlowPane.margin>
+                        </Button>
+                        <Button fx:id="btExportPivot" mnemonicParsing="false" onAction="#onExportPivot" text="Export">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                           <FlowPane.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </FlowPane.margin>
+                        </Button>
+                     </children>
+                     <opaqueInsets>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </FlowPane>
+               </top>
+            </BorderPane>
+         </content>
+      </Tab>
+      <Tab closable="false" text="Дополнительные фильтра">
+         <content>
+            <TabPane>
+               <tabs>
+                   <Tab closable="false" text="Наменования">
+                     <content>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="500.0" percentWidth="45.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" percentWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="500.0" percentWidth="45.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="10.0" orientation="VERTICAL" pickOnBounds="false" prefHeight="200.0" prefWidth="200.0" vgap="15.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#addName" prefWidth="100.0" text="Добавить" />
+                                    <Button mnemonicParsing="false" onAction="#delName" prefWidth="100.0" text="Удалить" />
+                                    <Button mnemonicParsing="false" onAction="#clearName" prefWidth="100.0" text="Очистить" />
+                                 </children>
+                              </FlowPane>
+                              <VBox alignment="TOP_CENTER" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                                 <children>
+                                    <TextField fx:id="fName" prefHeight="39.0" prefWidth="676.0">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </VBox.margin></TextField>
+                                    <ListView fx:id="listName" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="554.0" prefWidth="676.0" />
+                                 </children>
+                              </VBox>
+                              <ListView fx:id="listSelName" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
+                           </children>
+                        </GridPane>
+                     </content>
+                  </Tab>
+                  <Tab closable="false" text="Производитель">
+                     <content>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="500.0" percentWidth="45.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" percentWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="500.0" percentWidth="45.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="10.0" orientation="VERTICAL" pickOnBounds="false" prefHeight="200.0" prefWidth="200.0" vgap="15.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#addKlass" prefWidth="100.0" text="Добавить" />
+                                    <Button mnemonicParsing="false" onAction="#delKlass" prefWidth="100.0" text="Удалить" />
+                                    <Button mnemonicParsing="false" onAction="#clearKlass" prefWidth="100.0" text="Очистить" />
+                                 </children>
+                              </FlowPane>
+                              <VBox alignment="TOP_CENTER" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                                 <children>
+                                    <TextField fx:id="fKlass" prefHeight="39.0" prefWidth="676.0">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </VBox.margin></TextField>
+                                    <ListView fx:id="listKlass" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="554.0" prefWidth="676.0" />
+                                 </children>
+                              </VBox>
+                              <ListView fx:id="listSelKlass" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
+                           </children>
+                        </GridPane>
+                     </content>
+                  </Tab>
+                  <Tab closable="false" text="Группа">
+                     <content>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="500.0" percentWidth="45.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" percentWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="500.0" percentWidth="45.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="10.0" orientation="VERTICAL" pickOnBounds="false" prefHeight="200.0" prefWidth="200.0" vgap="15.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#addGrup" prefWidth="100.0" text="Добавить" />
+                                    <Button mnemonicParsing="false" onAction="#delGrup" prefWidth="100.0" text="Удалить" />
+                                    <Button mnemonicParsing="false" onAction="#clearGrup" prefWidth="100.0" text="Очистить" />
+                                 </children>
+                              </FlowPane>
+                              <ListView fx:id="listGrup" maxWidth="1.7976931348623157E308" />
+                              <ListView fx:id="listSelGrup" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
+                           </children>
+                        </GridPane>
+                     </content>
+                  </Tab>
+                  <Tab closable="false" text="Лекарственная форма">
+                     <content>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="500.0" percentWidth="45.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" percentWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="500.0" percentWidth="45.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="10.0" orientation="VERTICAL" pickOnBounds="false" prefHeight="200.0" prefWidth="200.0" vgap="15.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#addVid" prefWidth="100.0" text="Добавить" />
+                                    <Button mnemonicParsing="false" onAction="#delVid" prefWidth="100.0" text="Удалить" />
+                                    <Button mnemonicParsing="false" onAction="#clearVid" prefWidth="100.0" text="Очистить" />
+                                 </children>
+                              </FlowPane>
+                              <ListView fx:id="listVid" maxWidth="1.7976931348623157E308" />
+                              <ListView fx:id="listSelVid" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
+                           </children>
+                        </GridPane>
+                     </content>
+                  </Tab>
+                  <Tab closable="false" text="Тип товара">
+                     <content>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="500.0" percentWidth="45.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" percentWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="500.0" percentWidth="45.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="10.0" orientation="VERTICAL" pickOnBounds="false" prefHeight="200.0" prefWidth="200.0" vgap="15.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#addTip" prefWidth="100.0" text="Добавить" />
+                                    <Button mnemonicParsing="false" onAction="#delTip" prefWidth="100.0" text="Удалить" />
+                                    <Button mnemonicParsing="false" onAction="#clearTip" prefWidth="100.0" text="Очистить" />
+                                 </children>
+                              </FlowPane>
+                              <ListView fx:id="listTip" maxWidth="1.7976931348623157E308" />
+                              <ListView fx:id="listSelTip" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
+                           </children>
+                        </GridPane>
+                     </content>
+                  </Tab>
+                  <Tab closable="false" text="Поставщик">
+                     <content>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="500.0" percentWidth="45.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" percentWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="500.0" percentWidth="45.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="10.0" orientation="VERTICAL" pickOnBounds="false" prefHeight="200.0" prefWidth="200.0" vgap="15.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#addPost" prefWidth="100.0" text="Добавить" />
+                                    <Button mnemonicParsing="false" onAction="#delPost" prefWidth="100.0" text="Удалить" />
+                                    <Button mnemonicParsing="false" onAction="#clearPost" prefWidth="100.0" text="Очистить" />
+                                 </children>
+                              </FlowPane>
+                              <ListView fx:id="listPostavka" maxWidth="1.7976931348623157E308" />
+                              <ListView fx:id="listSelPostavka" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
+                           </children>
+                        </GridPane>
+                     </content>
+                  </Tab>
+                  <Tab closable="false" text="Склады">
+                     <content>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="500.0" percentWidth="45.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" percentWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="500.0" percentWidth="45.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="10.0" orientation="VERTICAL" pickOnBounds="false" prefHeight="200.0" prefWidth="200.0" vgap="15.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#addSklad" prefWidth="100.0" text="Добавить" />
+                                    <Button mnemonicParsing="false" onAction="#delSklad" prefWidth="100.0" text="Удалить" />
+                                    <Button mnemonicParsing="false" onAction="#clearSklad" prefWidth="100.0" text="Очистить" />
+                                 </children>
+                              </FlowPane>
+                              <ListView fx:id="listSklad" maxWidth="1.7976931348623157E308" />
+                              <ListView fx:id="listSelSklad" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
+                           </children>
+                        </GridPane>
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+         </content>
+      </Tab>
+   </tabs>
+</TabPane>
