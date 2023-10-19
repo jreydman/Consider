@@ -34,9 +34,9 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
+.env
 .data
 /files
-.env*
 /ormconfig.json
 
 # Yarn
@@ -50,3 +50,4 @@ lerna-debug.log*
 
 /Docker/docker-compose.yaml*
 
+/database

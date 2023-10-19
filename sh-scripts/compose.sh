@@ -33,9 +33,26 @@ get_arg_value() {
     done
 }
 
-# stage=$(get_arg_value "stage" "$@")
-# if [ -z "$stage" ]; then echo "Warning!  [stage] wasn't found, set default: localhost"; stage="local"; fi
+stage=$(get_arg_value "stage" "$@")
+if [ -z "$stage" ]; then echo "Warning!  [stage] wasn't found, set default: paracels"; fi
+
+quoteName="db-paracels$stage-21072023"
+echo "Info! quote name: "$quoteName
 
 # ...
 
-return false
+if [ -z "$(docker images -q $quoteName)" ]; then
+  echo "Info! Creating image by file" "$PARENT_DIR/$DOCKER_PATH_LOCAL"/$quoteName.Dockerfile
+	docker build . -f "$PARENT_DIR/$DOCKER_PATH_LOCAL"/$quoteName.Dockerfile -t $quoteName
+  echo "Info! Finish image create"
+else
+	echo "Info! IMAGE IMAGE IS ALREADY EXISTS. ITS SEEMS YOU MAY REBASE IT"
+fi
+
+echo "Step! Running $quoteName staging..."
+echo "Info! Running docker"
+(docker run -d -p $DB_PORT:$DB_PORT -e ISC_PASSWORD=$DB_PASSWORD --name $quoteName $quoteName) &
+process=$!
+wait $process
+
+return 0
