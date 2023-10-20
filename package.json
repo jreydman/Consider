@@ -2,11 +2,18 @@
   "name": "consider-tests",
   "version": "1.0.0",
   "description": "tests",
-  "main": "index.js",
   "scripts": {
     "dev": "nodemon",
     "start": "node --loader ts-node/esm src/index.ts"
   },
+  "private": true,
+  "engines": {
+    "node": ">=16.0.0",
+    "yarn": ">=1.22.0",
+    "npm": "please-use-yarn",
+    "pnpm": "please-use-yarn"
+  },
+  "packageManager": "yarn@3.6.4",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jreydman/Consider.git"
