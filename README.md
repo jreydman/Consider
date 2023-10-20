@@ -30,9 +30,14 @@ yarn install
    ```
    /bin/bash ./sh-scripts/compose.sh <*/rostfarm/rostok>
    ```
-   ### DB Auth [docker terminal]
+   ### DB Auth
+   [docker terminal]
    ```
    /usr/local/firebird/bin/isql -user <login> -password <password> localhost:/firebird/data/BASEDATA.FDB
+   ```
+   [bash shell]
+   ```
+   docker exec -it db-<quoteName>-<backupdate(21072023)> /usr/local/firebird/bin/isql -user SYSDBA -password masterkey localhost:/firebird/data/BASEDATA.FDB
    ```
 ### Use app scripts
    - /* primary pm - [yarn] */
