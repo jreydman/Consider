@@ -2,10 +2,11 @@
   "name": "consider-tests",
   "version": "1.0.0",
   "type": "module",
+  "main": "dist/index.js",
   "description": "tests",
   "scripts": {
     "dev": "nodemon",
-    "start": "node --loader ts-node/esm src/index.ts"
+    "start": "node utils/clear-console && NODE_NO_WARNINGS=1 node --loader ts-node/esm src/index.ts"
   },
   "private": true,
   "engines": {
@@ -26,11 +27,14 @@
   },
   "homepage": "https://github.com/jreydman/Consider#readme",
   "devDependencies": {
+    "@types/node": "^20.8.7",
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "node-firebird": "^1.1.5"
   }
 }
