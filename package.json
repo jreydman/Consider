@@ -6,7 +6,7 @@
   "description": "tests",
   "scripts": {
     "dev": "nodemon",
-    "start": "node utils/clear-console && NODE_NO_WARNINGS=1 node --loader ts-node/esm src/index.ts"
+    "start": "node utils/clear-console && rimraf ./dist && NODE_NO_WARNINGS=1 node --loader ts-node/esm src/index.ts"
   },
   "private": true,
   "engines": {
@@ -29,8 +29,8 @@
   "devDependencies": {
     "@types/node": "^20.8.7",
     "nodemon": "^3.0.1",
+    "rimraf": "^5.0.5",
     "ts-node": "^10.9.1",
-    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.2.2"
   },
   "dependencies": {

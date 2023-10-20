@@ -37,7 +37,7 @@ yarn install
    ```
    [bash shell]
    ```
-   docker exec -it db-<quoteName>-<backupdate(21072023)> /usr/local/firebird/bin/isql -user SYSDBA -password masterkey localhost:/firebird/data/BASEDATA.FDB
+   docker exec -it db-<quoteName>-<backupdate(21072023)> /usr/local/firebird/bin/isql -user <user> -password <password> localhost:/firebird/data/BASEDATA.FDB
    ```
 ### Use app scripts
    - /* primary pm - [yarn] */

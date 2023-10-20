@@ -1,5 +1,6 @@
 import firebird from "node-firebird"
 import 'dotenv/config'
+import * as console from "console";
 
 const options : firebird.Options = {
   host : process.env["DB_HOST"],
@@ -15,7 +16,18 @@ const options : firebird.Options = {
 };
 
 export default class FirebirdClient {
-  static attach(callback: firebird.DatabaseCallback) {
-    firebird.attach(options, callback)
+  static driver: firebird.Database
+  static attach(callback: Function) : void {
+    firebird.attach(options, (err, db) : void => {
+      if (err) throw err
+      try {
+        console.log(`Database: connected!`);
+        callback()
+      } catch (e) { console.warn(e as Error) }
+      finally {
+        console.log(`Database: disconnected!`);
+        db.detach()
+      }
+    })
   }
 }

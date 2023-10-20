@@ -1,10 +1,12 @@
 import 'dotenv/config'
 import firebirdClient from "./libs/firebirdClient.js"
 
-console.log("START APP");
+console.log(`App: started!`);
 
-firebirdClient.attach((err,db)=>{
-  if(err) throw err
+(()=>{
+
+  firebirdClient.attach(()=>{
+    firebirdClient.driver.query("",[],()=>{})
+  })
   
-  
-})
+})()
