@@ -1,4 +1,6 @@
 ### Architecture
+
+---
 root
  * package*.json
  * .yarn/[yarn]
@@ -14,6 +16,7 @@ root
    * wait-for-it.sh
  * env-example
  * Makefile (deprecated)
+---
 
 ### Dev preparations
 ```
@@ -23,11 +26,22 @@ yarn install
 ```
 
 ### use SH [compose]
-- in root dir
-```
-/bin/bash ./sh-scripts/compose.sh <*/rostfarm/rostok>
-```
-### DB Auth [docker terminal]
-```
-/usr/local/firebird/bin/isql -user <login> -password <password> localhost:/firebird/data/BASEDATA.FDB
-```
+   - in root dir
+   ```
+   /bin/bash ./sh-scripts/compose.sh <*/rostfarm/rostok>
+   ```
+   ### DB Auth [docker terminal]
+   ```
+   /usr/local/firebird/bin/isql -user <login> -password <password> localhost:/firebird/data/BASEDATA.FDB
+   ```
+### Use app scripts
+   - /* primary pm - [yarn] */
+   
+   Dev construction realtime
+   ```
+   yarn dev
+   ```
+   Prod start
+   ```
+   yarn start
+   ```
