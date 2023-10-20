@@ -20,11 +20,11 @@ function executeQuery(prompt: string, params: any[], callback: firebird.QueryCal
 
   firebird.attach(dbOptions, function(err, db) {
     if (err) return callback(err, []);
-    console.log(`Database: connected!`);
+    console.log(`Database:\tconnected!`);
     
     db.query(prompt, params, (err, result) => {
       db.detach();
-      console.log(`Database: disconnected!`);
+      console.log(`Database:\tdisconnected!`);
 
       if (err) return callback(err, []);
       else return callback(undefined, result);

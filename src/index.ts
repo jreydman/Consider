@@ -3,20 +3,49 @@ import { executeQuery } from "./libs/database.js"
 import * as console from "console";
 import firebird from "node-firebird";
 import { Cennik, ICennik } from "./types/cennik.js";
-console.log(`App: started!`);
+import ExcelJS from "exceljs"
+import * as path from "path";
+import * as fs from "fs";
+import * as process from "process";
+import { fileURLToPath } from 'url';
+console.log(`App:\t\tstarted!`);
 
-(function() {
-  
+(async function() {
+
+  // QUERY
+  let dataPool: ICennik[] = []
   const prompt: string = `select * from cennik`
   const filter: any = []
-  const callback: firebird.QueryCallback = (err, result) => {
+  
+  
+  const excelDir = path.dirname(path.dirname(fileURLToPath(import.meta.url)))
+  const workbook = new ExcelJS.Workbook()
+  const sheetCennik = workbook.addWorksheet('Cennik');
+  workbook.views = [
+    {
+      x: 0, y: 0, width: 10000, height: 20000,
+      firstSheet: 0, activeTab: 1, visibility: 'visible'
+    }
+  ]
+  
+  const callback: firebird.QueryCallback = async (err, result) => {
     if(err) throw err
-    console.log("native: "+result[0]["DBEFOR"])
-    const test = new Cennik(result[0])
-    console.log("class: "+test.DBEFOR.getDate())
-    console.log("interface: "+(result[0]["DBEFOR"] as ICennik))
+    dataPool = dataPool.concat(result.map(obj=>obj))
+    console.log(`Excel:\t\tpush!`);
+    sheetCennik.addRow(dataPool[0])
+
+    
+    const filePath = path.join(excelDir, 'example.xlsx')
+    console.log(`App:\t\tcreating file!`)
+    fs.open(filePath, 'w', (err) => {
+      if(err) throw err;
+      console.log(`App:\t\tfile created!\t\t${filePath}`);
+
+      console.log(`Excel:\t\tstart persist file!\t${filePath}`);
+      workbook.xlsx.writeFile(filePath)
+      console.log(`Excel: file saved!`)
+      
+    });
   }
-  
   executeQuery(prompt, filter, callback)
-  
 })()
