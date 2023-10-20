@@ -6,7 +6,7 @@
   "description": "tests",
   "scripts": {
     "dev": "nodemon",
-    "start": "node utils/clear-console && rimraf ./dist && NODE_NO_WARNINGS=1 node --loader ts-node/esm src/index.ts"
+    "start": "rimraf ./dist && NODE_NO_WARNINGS=1 node --loader ts-node/esm src/index.ts"
   },
   "private": true,
   "engines": {
