@@ -1,6 +1,7 @@
 {
   "name": "consider-tests",
   "version": "1.0.0",
+  "type": "module",
   "description": "tests",
   "scripts": {
     "dev": "nodemon",
@@ -28,5 +29,8 @@
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1"
   }
 }
