@@ -4,7 +4,8 @@
   "description": "tests",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon",
+    "start": "node --loader ts-node/esm src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/jreydman/Consider/issues"
   },
-  "homepage": "https://github.com/jreydman/Consider#readme"
+  "homepage": "https://github.com/jreydman/Consider#readme",
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
 }
