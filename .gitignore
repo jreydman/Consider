@@ -1,0 +1,10 @@
+\[build\]/
+target/
+db.conf
+odbc/
+database/etc/
+database/log/
+database/system/
+database/data/
+!database/data/README.md
+.env
