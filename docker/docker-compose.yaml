@@ -1,0 +1,18 @@
+services:
+  database:
+    container_name: ${DATABASE_SERVICE_HOST}
+    image: jacobalberty/firebird:2.5-ss
+    environment:
+      - ISC_PASSWORD=${DATABASE_ISC_PASSWORD}
+      # - FIREBIRD_DATABASE=${DATABASE_NAME}.fdb
+      - FIREBIRD_USER=${DATABASE_USER}
+      - FIREBIRD_PASSWORD=${DATABASE_PASSWORD}
+    expose: ["${DATABASE_PORT}"]
+    ports: ["${DATABASE_PORT}:${DATABASE_PORT}"]
+    volumes: ["../database:/firebird"]
+  odbc:
+    container_name: ${ODBC_SERVICE_HOST}
+    image: marianaldenhoevel/firebirdwebadmin:latest
+    expose: ["${ODBC_PORT}"]
+    ports: ["${ODBC_PORT}:${ODBC_PORT}"]
+    volumes: ["../odbc:/tmp"]
